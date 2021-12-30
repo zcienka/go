@@ -1,45 +1,34 @@
 package GameEngine;
 
-import Pair.Pair;
-import Player.Player;
-
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+
+import Files.Files;
+import Pair.Pair;
 
 import static GeneralConstants.GeneralConstants.*;
-import static java.lang.Integer.numberOfTrailingZeros;
-import static java.lang.Integer.parseInt;
 
-import java.util.concurrent.ThreadLocalRandom;
 
 public class GameEngine {
     private ArrayList<List<Integer>> gameBoard;
-    private Player HumanPlayer;
-    private Player ComputerPlayer;
     private ArrayList<Long> pastMoves;
     private ArrayList<List<List<Long>>> zobristTable;
     private ArrayList<List<Boolean>> deadStones;
-    private boolean repaintBoard;
     private boolean invalidMove;
-    private Pair lastMoveCoordinates;
-    private int undefinedColor;
+    private final Pair lastMoveCoordinates;
+    Files files;
 
     // -1 - position not taken, 0 - position taken by white stone, 1 - position taken by black stone
-
     public GameEngine() {
         gameBoard = new ArrayList<>(NUMBER_OF_ROWS + 1);
-
-        this.HumanPlayer = new Player(0);
-        this.ComputerPlayer = new Player(0);
-        this.undefinedColor = -2;
+        files = new Files();
         initializeZobristTable();
         pastMoves = new ArrayList<>();
-        repaintBoard = false;
         lastMoveCoordinates = new Pair(null, null);
 
-        if (isPastFileAvailable()) {
-            initializeBoardFromFile();
+        if (files.isPastFileAvailable()) {
+            files.initializeBoardFromFile(this);
+//            CURRENT_PLAYER =
         } else {
             initializeEmptyGameBoard();
         }
@@ -73,7 +62,6 @@ public class GameEngine {
 //        gameBoard.add(Arrays.asList(1, 1, 0, 0, -1, -1, -1, 0, -1, 0, 1, -1, -1));
 //        gameBoard.add(Arrays.asList(1, 0, -1, 0, -1, -1, -1, -1, 0, 1, 1, -1, -1));
 //        gameBoard.add(Arrays.asList(-1, 0, -1, 0, -1, -1, -1, -1, 0, 0, 1, -1, -1));
-        CURRENT_PLAYER = HUMAN_PLAYER;
         deadStones = new ArrayList<>(NUMBER_OF_ROWS + 1);
 
         for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
@@ -88,15 +76,20 @@ public class GameEngine {
     private void initializeEmptyGameBoard() {
         ArrayList<Integer> row = new ArrayList<>(NUMBER_OF_ROWS + 1);
         for (int j = 0; j <= NUMBER_OF_ROWS; j++) {
-            row.add(-1);
+            row.add(PLACE_NOT_TAKEN);
         }
         for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
             gameBoard.add(new ArrayList<>(row));
         }
+        CURRENT_PLAYER = PLAYER1;
     }
 
     public ArrayList<List<Integer>> getGameBoard() {
         return gameBoard;
+    }
+
+    public void setGameBoard(ArrayList<List<Integer>> gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
     // calculating points with flood fill algorithm
@@ -111,9 +104,9 @@ public class GameEngine {
 
         for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
             for (int j = 0; j <= NUMBER_OF_ROWS; j++) {
-                if (gameBoard.get(i).get(j) == -1) {
+                if (gameBoard.get(i).get(j) == PLACE_NOT_TAKEN) {
                     pair = countTerritoryPoints(i, j, currentPlayerColor);
-                    if (pair.first != undefinedColor) {
+                    if (pair != null) {
                         if (pair.first == currentPlayerColor) {
                             currentPlayerPoints += pair.second;
                         } else {
@@ -126,6 +119,10 @@ public class GameEngine {
     }
 
     // I assume that you can't commit suicide
+    public void isNotSuicide() {
+
+    }
+
     public void makeMove(int i, int j, int currentPLayer) {
         gameBoard.get(i).set(j, currentPLayer);
 
@@ -141,10 +138,6 @@ public class GameEngine {
                 return;
             }
         }
-
-        if (deleteCapturedStones()) {
-            setRepaintBoard(true);
-        }
         setLastMoveCoordinates(i, j);
         addBoardToPastBoards();
     }
@@ -152,10 +145,6 @@ public class GameEngine {
     public void addBoardToPastBoards() {
         Long hash = computeZobristHash(gameBoard);
         pastMoves.add(hash);
-    }
-
-    public void popLastMoveFromPastMoves() {
-        pastMoves.remove(pastMoves.size() - 1);
     }
 
     private boolean checkIfInvalidIndex(float x, float y) {
@@ -171,6 +160,8 @@ public class GameEngine {
         ArrayList<ArrayList<Integer>> colors = new ArrayList<>();
         int numberOfPoints = 0;
         ArrayList<Integer> c = new ArrayList<>();
+        int coloredStone = -2;
+        Integer color;
 
         for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
             colors.add(new ArrayList<>());
@@ -178,17 +169,16 @@ public class GameEngine {
                 colors.get(i).add(null);
             }
         }
-        Integer color;
 
         while (!queue.isEmpty()) {
             Pair n = queue.pop();
             if (!checkIfInvalidIndex(n.first - 1, n.second)) {
                 color = gameBoard.get(n.first - 1).get(n.second);
-                if (color == -1) {
-                    gameBoard.get(n.first - 1).set(n.second, 4);
+                if (color == PLACE_NOT_TAKEN) {
+                    gameBoard.get(n.first - 1).set(n.second, coloredStone);
                     queue.add(new Pair(n.first - 1, n.second));
                     numberOfPoints++;
-                } else if (color != 4) {
+                } else if (color != coloredStone) {
                     if (!Objects.equals(colors.get(n.first - 1).get(n.second), color) &&
                             !isDeadStone(n.first - 1, n.second)) {
                         colors.get(n.first - 1).set(n.second, color);
@@ -199,11 +189,11 @@ public class GameEngine {
 
             if (!checkIfInvalidIndex(n.first + 1, n.second)) {
                 color = gameBoard.get(n.first + 1).get(n.second);
-                if (color == -1) {
-                    gameBoard.get(n.first + 1).set(n.second, 4);
+                if (color == PLACE_NOT_TAKEN) {
+                    gameBoard.get(n.first + 1).set(n.second, coloredStone);
                     queue.add(new Pair(n.first + 1, n.second));
                     numberOfPoints++;
-                } else if (color != 4) {
+                } else if (color != coloredStone) {
                     if (!Objects.equals(colors.get(n.first + 1).get(n.second), color) &&
                             !isDeadStone(n.first + 1, n.second)) {
                         colors.get(n.first + 1).set(n.second, color);
@@ -214,11 +204,11 @@ public class GameEngine {
 
             if (!checkIfInvalidIndex(n.first, n.second + 1)) {
                 color = gameBoard.get(n.first).get(n.second + 1);
-                if (color == -1) {
-                    gameBoard.get(n.first).set(n.second + 1, 4);
+                if (color == PLACE_NOT_TAKEN) {
+                    gameBoard.get(n.first).set(n.second + 1, coloredStone);
                     queue.add(new Pair(n.first, n.second + 1));
                     numberOfPoints++;
-                } else if (color != 4) {
+                } else if (color != coloredStone) {
                     if (!Objects.equals(colors.get(n.first).get(n.second + 1), color) &&
                             !isDeadStone(n.first, n.second + 1)) {
                         colors.get(n.first).set(n.second + 1, color);
@@ -229,11 +219,11 @@ public class GameEngine {
 
             if (!checkIfInvalidIndex(n.first, n.second - 1)) {
                 color = gameBoard.get(n.first).get(n.second - 1);
-                if (color == -1) {
-                    gameBoard.get(n.first).set(n.second - 1, 4);
+                if (color == PLACE_NOT_TAKEN) {
+                    gameBoard.get(n.first).set(n.second - 1, coloredStone);
                     queue.add(new Pair(n.first, n.second - 1));
                     numberOfPoints++;
-                } else if (color != 4) {
+                } else if (color != coloredStone) {
                     if (!Objects.equals(colors.get(n.first).get(n.second - 1), color) &&
                             !isDeadStone(n.first, n.second - 1)) {
                         colors.get(n.first).set(n.second - 1, color);
@@ -244,14 +234,14 @@ public class GameEngine {
         }
         for (Integer s : c) {
             if (!s.equals(c.get(0))) {
-                return new Pair(0, -1);
+                return null;
             }
         }
 
         if (c.get(0) == currentPlayerColor) {
-            return new Pair(numberOfPoints, -1);
+            return new Pair(numberOfPoints, PLACE_NOT_TAKEN);
         } else {
-            return new Pair(-numberOfPoints, -1);
+            return new Pair(-numberOfPoints, PLACE_NOT_TAKEN);
         }
     }
 
@@ -268,7 +258,7 @@ public class GameEngine {
                     capturedStones = checkForCapturedStones(new Pair(i, j));
                     if (capturedStones != null) {
                         for (Pair stone : capturedStones) {
-                            gameBoard.get(stone.first).set(stone.second, -1);
+                            gameBoard.get(stone.first).set(stone.second, PLACE_NOT_TAKEN);
                             CURRENT_PLAYER.addNumberOfCapturedStones(1);
                         }
                         return true;
@@ -287,8 +277,6 @@ public class GameEngine {
 
     // rule of superko means that the board can't be in the same state as before
     public boolean isSuperko() {
-//        ArrayList<List<Integer>> xd = (ArrayList<List<Integer>) tempGameBoard.clone();
-//        gameBoard.get(x).set(y, CURRENT_PLAYER.getPlayerNumber());
         Long zobristHash = computeZobristHash(gameBoard);
 
         if (!pastMoves.isEmpty()) {
@@ -301,7 +289,17 @@ public class GameEngine {
         return false;
     }
 
+    // I define game over as a situation when two players have passed or one player has resigned or there are no
+    // available moves
     public boolean isGameOver() {
+        if (PLAYER1.hasResigned() || PLAYER2.hasResigned()) {
+            return true;
+        }
+
+        if (PLAYER1.isMovePassed() && PLAYER2.isMovePassed()) {
+            return true;
+        }
+
         if (pastMoves.size() != 0) {
             for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
                 for (int j = 0; j <= NUMBER_OF_ROWS; j++) {
@@ -390,30 +388,25 @@ public class GameEngine {
         return coloredStonesIndexes;
     }
 
-//    public boolean isMoveValid(int i, int j, int currentStonePlayer) {
-//        return (gameBoard.get(i).get(j) == -1 ||
-//                Objects.equals(gameBoard.get(i).get(j), currentStonePlayer));
-//    }
-
     // checking if there are any valid moves left
     public boolean areLibertiesLeft(Pair stone) {
-        if (gameBoard.get(stone.first + 1).get(stone.second) == -1) {
+        if (gameBoard.get(stone.first + 1).get(stone.second) == PLACE_NOT_TAKEN) {
             return true;
         }
-        if (gameBoard.get(stone.first - 1).get(stone.second) == -1) {
+        if (gameBoard.get(stone.first - 1).get(stone.second) == PLACE_NOT_TAKEN) {
             return true;
         }
-        if (gameBoard.get(stone.first).get(stone.second + 1) == -1) {
+        if (gameBoard.get(stone.first).get(stone.second + 1) == PLACE_NOT_TAKEN) {
             return true;
         }
-        if (gameBoard.get(stone.first).get(stone.second - 1) == -1) {
+        if (gameBoard.get(stone.first).get(stone.second - 1) == PLACE_NOT_TAKEN) {
             return true;
         }
         return false;
     }
 
     public void undoMove(Pair stone) {
-        gameBoard.get(stone.first).set(stone.second, -1);
+        gameBoard.get(stone.first).set(stone.second, PLACE_NOT_TAKEN);
     }
 
     private void initializeZobristTable() {
@@ -430,7 +423,6 @@ public class GameEngine {
                 }
             }
         }
-        System.out.println("xd");
     }
 
     // https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-5-zobrist-hashing/?ref=lbp
@@ -441,7 +433,7 @@ public class GameEngine {
         for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
             for (int j = 0; j <= NUMBER_OF_ROWS; j++) {
                 stoneNumber = board.get(i).get(j);
-                if (stoneNumber != -1) {
+                if (stoneNumber != PLACE_NOT_TAKEN) {
                     hash ^= zobristTable.get(i).get(j).get(stoneNumber);
                 }
             }
@@ -455,14 +447,6 @@ public class GameEngine {
 
     public boolean isDeadStone(int i, int j) {
         return deadStones.get(i).get(j);
-    }
-
-    public boolean isRepaintBoard() {
-        return repaintBoard;
-    }
-
-    public void setRepaintBoard(boolean repaintBoard) {
-        this.repaintBoard = repaintBoard;
     }
 
     public boolean isInvalidMove() {
@@ -479,67 +463,26 @@ public class GameEngine {
     }
 
     public void resign() {
-
+        if (CURRENT_PLAYER == PLAYER1) {
+            PLAYER1.resign();
+        } else {
+            PLAYER2.resign();
+        }
     }
 
     public void passMove() {
-
+        if (CURRENT_PLAYER == PLAYER1) {
+            PLAYER1.passMove();
+        } else {
+            PLAYER2.passMove();
+        }
     }
 
     public int getPlayerOneScore() {
-        return HumanPlayer.getNumberOfCapturedStones();
+        return PLAYER1.getNumberOfCapturedStones();
     }
 
     public int getPlayerTwoScore() {
-        return ComputerPlayer.getNumberOfCapturedStones();
-    }
-
-    public void saveGameToFile() {
-        File pastGameDirectory = new File("/pastGame");
-        if (!pastGameDirectory.exists()) {
-            pastGameDirectory.mkdirs();
-        }
-
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("/pastGame/pastGame.txt"), StandardCharsets.UTF_8))) {
-
-            for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
-                for (int j = 0; j <= NUMBER_OF_ROWS; j++) {
-                    writer.write(gameBoard.get(i).get(j) + " ");
-                }
-                writer.write("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void initializeBoardFromFile() {
-        String file = "/pastGame/pastGame.txt";
-        ArrayList<ArrayList<Integer>> gameBoard = new ArrayList<>(NUMBER_OF_ROWS + 1);
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            int indexCounter = 0;
-
-            while ((line = br.readLine()) != null) {
-                String[] numbers = line.split(" ");
-                gameBoard.add(new ArrayList<>(NUMBER_OF_ROWS + 1));
-
-                for (String number : numbers) {
-                    gameBoard.get(indexCounter).add(parseInt(number));
-                }
-
-                indexCounter++;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean isPastFileAvailable() {
-        File file = new File("/pastGame/pastGame1.txt");
-        return file.exists();
+        return PLAYER2.getNumberOfCapturedStones();
     }
 }

@@ -1,6 +1,5 @@
 package UI;
 
-import GameEngine.GameEngine;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,6 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+
+import Files.Files;
+import GameEngine.GameEngine;
 
 import static GeneralConstants.GeneralConstants.*;
 import static UI.Constants.*;
@@ -36,7 +38,6 @@ public class Board extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 point = new PointInfo(e.getX(), e.getY(), CURRENT_PLAYER.getPlayerNumber());
-                revalidate();
                 repaint();
             }
         });
@@ -47,7 +48,6 @@ public class Board extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.setColor(Color.darkGray);
-//        insertDeadStoneCoordinates();
 
         if (point != null) {
             int x, y;
@@ -57,20 +57,20 @@ public class Board extends JPanel {
             y = closestPoints.get(1);
 
             if (x >= 0 && y >= 0 && x <= NUMBER_OF_ROWS && y <= NUMBER_OF_ROWS
-                    && game.getGameBoard().get(x).get(y) == -1) {
+                    && game.getGameBoard().get(x).get(y) == PLACE_NOT_TAKEN) {
                 game.makeMove(x, y, CURRENT_PLAYER.getPlayerNumber());
 
                 if (!game.isInvalidMove()) {
-                    if (CURRENT_PLAYER == HUMAN_PLAYER) {
-                        CURRENT_PLAYER = COMPUTER;
+                    if (CURRENT_PLAYER == PLAYER1) {
+                        CURRENT_PLAYER = PLAYER2;
                     } else {
-                        CURRENT_PLAYER = HUMAN_PLAYER;
+                        CURRENT_PLAYER = PLAYER1;
                     }
                 }
             }
         }
 
-        // I couldn't find a way to update text in java, so I decided to display current move by picture
+        // I couldn't find a way to update text in java with JLabel, so I decided to display current move by picture
         drawGrid(g2, g);
         if (CURRENT_PLAYER.getPlayerNumber() == 0) {
             g2.drawImage(whiteStonePicture, WINDOW_PADDING + WINDOW_WIDTH / 2 + 80, WINDOW_PADDING + 14, 40, 40, null);
@@ -83,11 +83,19 @@ public class Board extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        checkIfGameOver();
         game.setInvalidMove(false);
+
+    }
+
+    private void checkIfGameOver() {
         if (game.isGameOver()) {
             insertDeadStoneCoordinates();
             showGameOverPopUp();
+            Files files = new Files(game.getGameBoard());
+//            game.deleteBoardFiles();
+            files.deleteBoardFiles();
+            System.exit(0);
         }
     }
 
@@ -118,7 +126,7 @@ public class Board extends JPanel {
         super.paint(g);
         g2.setColor(BOARD_COLOR);
         RoundRectangle2D roundedRectangle = new RoundRectangle2D.Float(BOARD_SHIFT_X, BOARD_SHIFT_Y,
-                BOARD_SIZE, BOARD_SIZE, 10, 10);
+                BOARD_SIZE, BOARD_SIZE, 16, 16);
         g2.fill(roundedRectangle);
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(3));
@@ -165,7 +173,7 @@ public class Board extends JPanel {
         for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
             for (int j = 0; j <= NUMBER_OF_ROWS; j++) {
                 stoneColor = game.getGameBoard().get(i).get(j);
-                if (stoneColor != -1) {
+                if (stoneColor != PLACE_NOT_TAKEN) {
                     drawSingleStone(g2, i, j, stoneColor);
                 }
             }
@@ -192,8 +200,8 @@ public class Board extends JPanel {
     }
 
     private void showGameOverPopUp() {
-        String message = "Game Over! Player 1 score: " + game.getPlayerOneScore() +
-                "Player 2 score:" + game.getPlayerTwoScore();
+        String message = "Game Over!\nPlayer 1 score: " + game.getPlayerOneScore() + "\n" +
+                "Player 2 score: " + game.getPlayerTwoScore();
         JOptionPane.showMessageDialog(this, message);
     }
 
@@ -224,11 +232,20 @@ public class Board extends JPanel {
         passButton.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 game.passMove();
+                checkIfGameOver();
+
+                if (CURRENT_PLAYER == PLAYER1) {
+                    CURRENT_PLAYER = PLAYER2;
+                } else {
+                    CURRENT_PLAYER = PLAYER1;
+                }
+                repaint();
             }
         });
         resignButton.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                showGameOverPopUp();
+                game.resign();
+                checkIfGameOver();
             }
         });
 
@@ -315,4 +332,6 @@ public class Board extends JPanel {
         }
         return null;
     }
+
+
 }

@@ -1,8 +1,5 @@
 package UI;
 
-import Player.Player;
-
-//public class UI {
 public class PointInfo {
     public int x;
     public int y;
