@@ -1,10 +1,10 @@
 package Pair;
 
-public class Pair {
-    public Integer first;
-    public Integer second;
+public class Pair<K, V> {
+    public K first;
+    public V second;
 
-    public Pair(Integer first, Integer second) {
+    public Pair(K first, V second) {
         this.first = first;
         this.second = second;
     }

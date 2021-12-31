@@ -2,16 +2,22 @@ package Player;
 
 public class Player {
     private int numberOfCapturedStones;
-    private int playerNumber;
+    private final int playerNumber;
     private int finalScore;
     private boolean hasPassedMove;
     private boolean resigned;
-//    public Player(int numberOfCapturedStones) {
-//        this.numberOfCapturedStones = numberOfCapturedStones;
-//    }
 
     public Player(int playerNumber) {
         this.playerNumber = playerNumber;
+    }
+
+    public Player(int numberOfCapturedStones, int playerNumber, int finalScore, boolean hasPassedMove,
+            boolean resigned) {
+        this.numberOfCapturedStones = numberOfCapturedStones;
+        this.playerNumber = playerNumber;
+        this.finalScore = finalScore;
+        this.hasPassedMove = hasPassedMove;
+        this.resigned = resigned;
     }
 
     public int getPlayerNumber() {
@@ -38,12 +44,12 @@ public class Player {
         return hasPassedMove;
     }
 
-    public void passMove() {
-        hasPassedMove = true;
+    public void setPassMove(boolean hasPassedMove) {
+        this.hasPassedMove = hasPassedMove;
     }
 
     public void resign() {
-        resigned = true;
+        this.resigned = true;
     }
 
     public boolean hasResigned() {

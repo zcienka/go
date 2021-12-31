@@ -15,24 +15,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
+import ErrorMessage.ErrorMessage;
 import Files.Files;
-import GameEngine.GameEngine;
+import Game.Game;
+import Pair.Pair;
 
 import static GeneralConstants.GeneralConstants.*;
 import static UI.Constants.*;
 
 public class Board extends JPanel {
     private PointInfo point;
-    private final GameEngine game;
-    private final BufferedImage whiteStonePicture;
-    private final BufferedImage blackStonePicture;
+    private final Game game;
+    private BufferedImage whiteStonePicture;
+    private BufferedImage blackStonePicture;
 
-    Board(GameEngine game) throws IOException {
+    public Board(Game game) {
         this.game = game;
         setBackground(Color.BLACK);
         drawButtons();
-        whiteStonePicture = ImageIO.read(new File("imgs/white.png"));
-        blackStonePicture = ImageIO.read(new File("imgs/black.png"));
+        ErrorMessage errorMessage = new ErrorMessage();
+
+        try {
+            whiteStonePicture = ImageIO.read(new File("imgs/white.png"));
+            blackStonePicture = ImageIO.read(new File("imgs/black.png"));
+        } catch (IOException e) {
+            errorMessage.missingPicture();
+            System.exit(0);
+        }
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -50,28 +59,13 @@ public class Board extends JPanel {
         g2.setColor(Color.darkGray);
 
         if (point != null) {
-            int x, y;
-            ArrayList<Integer> closestPoints;
-            closestPoints = findClosestPoint(point.x, point.y);
-            x = closestPoints.get(0);
-            y = closestPoints.get(1);
-
-            if (x >= 0 && y >= 0 && x <= NUMBER_OF_ROWS && y <= NUMBER_OF_ROWS
-                    && game.getGameBoard().get(x).get(y) == PLACE_NOT_TAKEN) {
-                game.makeMove(x, y, CURRENT_PLAYER.getPlayerNumber());
-
-                if (!game.isInvalidMove()) {
-                    if (CURRENT_PLAYER == PLAYER1) {
-                        CURRENT_PLAYER = PLAYER2;
-                    } else {
-                        CURRENT_PLAYER = PLAYER1;
-                    }
-                }
-            }
+            Pair<Integer, Integer> closestPoints = findClosestPoint(point.x, point.y);
+            game.makeMove(closestPoints);
         }
 
         // I couldn't find a way to update text in java with JLabel, so I decided to display current move by picture
         drawGrid(g2, g);
+
         if (CURRENT_PLAYER.getPlayerNumber() == 0) {
             g2.drawImage(whiteStonePicture, WINDOW_PADDING + WINDOW_WIDTH / 2 + 80, WINDOW_PADDING + 14, 40, 40, null);
         } else {
@@ -83,23 +77,28 @@ public class Board extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        checkIfGameOver();
-        game.setInvalidMove(false);
 
+        checkIfGameOver();
+        if (CURRENT_PLAYER.getPlayerNumber() == PLAYER1.getPlayerNumber()) {
+            PLAYER1.setPassMove(false);
+        } else {
+            PLAYER2.setPassMove(false);
+        }
+        point = null;
     }
 
     private void checkIfGameOver() {
         if (game.isGameOver()) {
             insertDeadStoneCoordinates();
+            game.calculateFinalPoints();
             showGameOverPopUp();
-            Files files = new Files(game.getGameBoard());
-//            game.deleteBoardFiles();
+            Files files = new Files();
             files.deleteBoardFiles();
             System.exit(0);
         }
     }
 
-    private ArrayList<Integer> findClosestPoint(int x, int y) {
+    private Pair<Integer, Integer> findClosestPoint(int x, int y) {
         float pointX = (float) x - GRID_SHIFT_X;
         float pointY = (float) y - GRID_SHIFT_X;
 
@@ -119,7 +118,7 @@ public class Board extends JPanel {
             closestRow = (int) Math.floor(pointY / SIZE_OF_CELL);
         }
 
-        return new ArrayList<>(Arrays.asList(closestColumn, closestRow));
+        return new Pair<>(closestColumn, closestRow);
     }
 
     private void drawGrid(Graphics2D g2, Graphics g) {
@@ -165,6 +164,25 @@ public class Board extends JPanel {
             }
             counter--;
         }
+        addOrientationPoints(g2);
+    }
+
+    // draws small circle orientation points
+    private void addOrientationPoints(Graphics2D g2) {
+        if (NUMBER_OF_ROWS == 18) {
+            int l = 0, k;
+            for (int i = GRID_SHIFT_X; i <= GRID_SHIFT_X + SIZE_OF_CELL * NUMBER_OF_ROWS; i += SIZE_OF_CELL) {
+                k = 0;
+                for (int j = GRID_SHIFT_X; j <= GRID_SHIFT_X + SIZE_OF_CELL * NUMBER_OF_ROWS; j += SIZE_OF_CELL) {
+                    if ((k == 9 || k == 3 || k == 15) && (l == 9 || l == 3 || l == 15)) {
+                        g2.fillOval(i - ORIENTATION_POINTS_RADIUS / 2, j - ORIENTATION_POINTS_RADIUS / 2,
+                                ORIENTATION_POINTS_RADIUS, ORIENTATION_POINTS_RADIUS);
+                    }
+                    k++;
+                }
+                l++;
+            }
+        }
     }
 
     private void drawAllStonesOnBoard(Graphics2D g2) throws IOException {
@@ -200,8 +218,8 @@ public class Board extends JPanel {
     }
 
     private void showGameOverPopUp() {
-        String message = "Game Over!\nPlayer 1 score: " + game.getPlayerOneScore() + "\n" +
-                "Player 2 score: " + game.getPlayerTwoScore();
+        String message = "Game Over!\nPlayer 1 (black stone) score: " + PLAYER1.getFinalScore() + "\n" +
+                "Player 2 (white stone) score: " + PLAYER2.getFinalScore();
         JOptionPane.showMessageDialog(this, message);
     }
 
@@ -233,12 +251,8 @@ public class Board extends JPanel {
             public void mousePressed(MouseEvent e) {
                 game.passMove();
                 checkIfGameOver();
-
-                if (CURRENT_PLAYER == PLAYER1) {
-                    CURRENT_PLAYER = PLAYER2;
-                } else {
-                    CURRENT_PLAYER = PLAYER1;
-                }
+                game.changePlayers();
+                point = null;
                 repaint();
             }
         });
@@ -306,7 +320,7 @@ public class Board extends JPanel {
                     j = getStoneIndex(s, numbers);
                 }
                 if (j != null) {
-                    stones.add(new ArrayList<>(Arrays.asList(i, j)));
+                    stones.add(new ArrayList<>(Arrays.asList(i, NUMBER_OF_ROWS - j)));
                 }
             }
         }
@@ -332,6 +346,4 @@ public class Board extends JPanel {
         }
         return null;
     }
-
-
 }

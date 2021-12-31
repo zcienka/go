@@ -7,7 +7,7 @@ import static GeneralConstants.GeneralConstants.NUMBER_OF_ROWS;
 public class Constants {
     public static int WINDOW_WIDTH = 950;
     public static int WINDOW_HEIGHT = WINDOW_WIDTH + 100;
-    public static int SIZE_OF_CELL = 35;
+    public static int SIZE_OF_CELL = 630 / NUMBER_OF_ROWS;
     public static int GRID_SHIFT_X = WINDOW_WIDTH / 2 - (SIZE_OF_CELL * NUMBER_OF_ROWS) / 2;
     public static int STONE_DIAMETER = SIZE_OF_CELL;
     public static int BOARD_SIZE = SIZE_OF_CELL * NUMBER_OF_ROWS + 96;
@@ -22,4 +22,5 @@ public class Constants {
     public static int WINDOW_PADDING = 36;
     public static Color BOARD_COLOR = new Color(255, 211, 154);
     public static int BOARD_LABEL_SHIFT = 24;
+    public static int ORIENTATION_POINTS_RADIUS = 8;
 }

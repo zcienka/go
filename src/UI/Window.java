@@ -1,18 +1,17 @@
 package UI;
 
 import Files.Files;
-import GameEngine.GameEngine;
+import Game.Game;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.IOException;
 
 import static UI.Constants.*;
 
 public class Window {
-    public Window() throws IOException {
+    public Window() {
         JFrame frame = new JFrame("Go");
-        GameEngine game = new GameEngine();
+        Game game = new Game();
 
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -28,10 +27,10 @@ public class Window {
                 int closeWindow = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
 
                 if (closeWindow == 0) {
-//                    game.saveGameToFile();
-                    Files files = new Files(game.getGameBoard());
-                    files.saveGameToFile();
-//                    game.saveGameToFile();
+                    Files files = new Files();
+                    files.saveGameToFile(game);
+                    files.saveZobristBoardToFile(game.getZobristTable());
+                    files.savePastMovesToFile(game.getPastMoves());
                     System.exit(0);
                 }
             }

@@ -1,9 +1,9 @@
-package UI;
+package ErrorMessage;
 
 import javax.swing.*;
 
 public class ErrorMessage {
-    public void KoRule() {
+    public void koRule() {
         String title = "Invalid move";
         String message = "Chosen field is the same as the last move. Ko rule.";
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
@@ -36,6 +36,12 @@ public class ErrorMessage {
     public void missingFile() {
         String title = "File error";
         String message = "File is missing. Initializing new board.";
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void missingPicture() {
+        String title = "File error";
+        String message = "File is missing. Quitting the program.";
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
     }
 }

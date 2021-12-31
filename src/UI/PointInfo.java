@@ -5,7 +5,7 @@ public class PointInfo {
     public int y;
     public int playerNumber;
 
-    PointInfo(int x, int y, int playerNumber) {
+    public PointInfo(int x, int y, int playerNumber) {
         this.x = x;
         this.y = y;
         this.playerNumber = playerNumber;
