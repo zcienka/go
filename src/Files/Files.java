@@ -2,7 +2,6 @@ package Files;
 
 import ErrorMessage.ErrorMessage;
 import Game.Game;
-import Pair.Pair;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -102,21 +101,28 @@ public class Files {
 
             br.readLine(); // Last player move:
             String currentPlayer = br.readLine();
+
             if (Objects.equals(currentPlayer, "PLAYER1")) {
                 game.setCurrentPlayerToPLayer1();
-            } else {
+            } else if (Objects.equals(currentPlayer, "PLAYER2")) {
                 game.setCurrentPlayerToPlayer2();
+            } else {
+                errorMessage.brokenFile();
+                deleteBoardFiles();
+                game.initializeZobristTable();
+                game.initializeEmptyGameBoard();
+                game.clearPastMoves();
             }
 
             br.readLine(); // Number of stones captured by player 1:
-            int x = Integer.parseInt(br.readLine());
-            PLAYER1.setNumberOfCapturedStones(x);
+            int capturedStones1 = Integer.parseInt(br.readLine());
+            PLAYER1.setNumberOfCapturedStones(capturedStones1);
             br.readLine(); // Has player 1 passed his move:
             PLAYER1.setPassMove(Boolean.parseBoolean(br.readLine()));
 
             br.readLine(); // Number of stones captured by player 2:
-            int y = Integer.parseInt(br.readLine());
-            PLAYER2.setNumberOfCapturedStones(y);
+            int capturedStones2 = Integer.parseInt(br.readLine());
+            PLAYER2.setNumberOfCapturedStones(capturedStones2);
             br.readLine(); // Has player 2 passed his move:
             PLAYER2.setPassMove(Boolean.parseBoolean(br.readLine()));
 
@@ -132,10 +138,12 @@ public class Files {
                 indexCounter++;
             }
             game.setGameBoard(gameBoard);
-        } catch (IOException e) {
+        } catch (Exception e) {
             errorMessage.brokenFile();
             deleteBoardFiles();
-            System.exit(0);
+            game.initializeZobristTable();
+            game.initializeEmptyGameBoard();
+            game.clearPastMoves();
         }
     }
 
@@ -162,10 +170,12 @@ public class Files {
                 i++;
             }
             game.setZobristTable(zobristTable);
-        } catch (IOException e) {
+        } catch (Exception e) {
             errorMessage.brokenFile();
             deleteBoardFiles();
-            System.exit(0);
+            game.initializeZobristTable();
+            game.initializeEmptyGameBoard();
+            game.clearPastMoves();
         }
     }
 
@@ -178,10 +188,12 @@ public class Files {
                 pastMoves.add(Long.parseLong(line));
             }
             game.setPastMoves(pastMoves);
-        } catch (IOException e) {
+        } catch (Exception e) {
             errorMessage.brokenFile();
             deleteBoardFiles();
-            System.exit(0);
+            game.initializeZobristTable();
+            game.initializeEmptyGameBoard();
+            game.clearPastMoves();
         }
     }
 
@@ -207,6 +219,14 @@ public class Files {
         File allPositionsFile = new File(allPositionsInGame);
         File zobristBoard = new File(zobristBoardFilename);
 
-        return pastGameFile.exists() && allPositionsFile.exists() && zobristBoard.exists();
+        if (pastGameFile.exists() && allPositionsFile.exists() && zobristBoard.exists()) {
+            return true;
+        } else if (!pastGameFile.exists() && !allPositionsFile.exists() && !zobristBoard.exists()) {
+            return false;
+        } else {
+            deleteBoardFiles();
+            errorMessage.missingFile();
+            return false;
+        }
     }
 }

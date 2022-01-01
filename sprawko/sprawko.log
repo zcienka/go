@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.10) (preloaded format=pdflatex 2021.10.30)  31 DEC 2021 19:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.10) (preloaded format=pdflatex 2021.10.30)  1 JAN 2022 02:35
 entering extended mode
 **c:/Users/zuzan/Desktop/repos/go/sprawko/sprawko.tex
 (c:/Users/zuzan/Desktop/repos/go/sprawko/sprawko.tex
@@ -135,66 +135,67 @@ Package: fancyhdr 2021/01/28 v4.0.1 Extensive control of page headers and footer
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks18
 \inpenc@posthook=\toks19
+) (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+ (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen154
+\captionmargin@=\dimen155
+\captionwidth=\dimen156
+\caption@tempdima=\dimen157
+\caption@indent=\dimen158
+\caption@parindent=\dimen159
+\caption@hangindent=\dimen160
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count195
+\c@continuedfloat=\count196
+) (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count197
+\float@exts=\toks20
+\float@box=\box50
+\@float@everytoks=\toks21
+\@floatcapt=\box51
 ) (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count195
-\l__pdf_internal_box=\box50
+\l__color_backend_stack_int=\count198
+\l__pdf_internal_box=\box52
 ) (sprawko.aux)
 \openout1 = `sprawko.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
  (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count196
-\scratchdimen=\dimen154
-\scratchbox=\box51
-\nofMPsegments=\count197
-\nofMParguments=\count198
-\everyMPshowfont=\toks20
-\MPscratchCnt=\count199
-\MPscratchDim=\dimen155
-\MPnumerator=\count266
-\makeMPintoPDFobject=\count267
-\everyMPtoPDFconversion=\toks21
+\scratchcounter=\count199
+\scratchdimen=\dimen161
+\scratchbox=\box53
+\nofMPsegments=\count266
+\nofMParguments=\count267
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count268
+\MPscratchDim=\dimen162
+\MPnumerator=\count269
+\makeMPintoPDFobject=\count270
+\everyMPtoPDFconversion=\toks23
 ) (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
- (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
-Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-) (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/grfext\grfext.sty
-Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
- (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
-Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-)) (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
-Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
- (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
-Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
-) (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.sty
-Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-)) (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 504.
  (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
@@ -232,79 +233,167 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--32
+Underfull \hbox (badness 10000) in paragraph at lines 29--37
 
  []
 
-<imgs/goban.png, id=1, 556.32843pt x 560.0925pt>
+<imgs/goban.png, id=1, 542.025pt x 540.51938pt>
 File: imgs/goban.png Graphic file (type png)
 <use imgs/goban.png>
-Package pdftex.def Info: imgs/goban.png  used on input line 41.
-(pdftex.def)             Requested size: 556.32707pt x 560.09113pt.
+Package pdftex.def Info: imgs/goban.png  used on input line 48.
+(pdftex.def)             Requested size: 349.52487pt x 348.54625pt.
 
-Overfull \hbox (151.32248pt too wide) in paragraph at lines 41--42
- [] 
+Underfull \hbox (badness 10000) in paragraph at lines 50--54
+
  []
 
 [1{C:/Users/zuzan/AppData/Local/MiKTeX/pdftex/config/pdftex.map}
 
-]
-Overfull \vbox (3.61456pt too high) has occurred while \output is active []
+ <./imgs/goban.png>]
+<imgs/capture1a.png, id=12, 109.91063pt x 146.79843pt>
+File: imgs/capture1a.png Graphic file (type png)
+<use imgs/capture1a.png>
+Package pdftex.def Info: imgs/capture1a.png  used on input line 59.
+(pdftex.def)             Requested size: 85.2117pt x 113.81102pt.
+<imgs/capture1b.png, id=13, 112.16907pt x 149.05687pt>
+File: imgs/capture1b.png Graphic file (type png)
+<use imgs/capture1b.png>
+Package pdftex.def Info: imgs/capture1b.png  used on input line 61.
+(pdftex.def)             Requested size: 85.64644pt x 113.81102pt.
+LaTeX Font Info:    Trying to load font information for OML+plm on input line 62.
+ (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/polski\omlplm.fd
+File: omlplm.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
+)
+LaTeX Font Info:    Trying to load font information for OMS+plsy on input line 62.
+ (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/polski\omsplsy.fd
+File: omsplsy.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
+)
+LaTeX Font Info:    Trying to load font information for OMX+plex on input line 62.
+ (C:\Users\zuzan\AppData\Local\Programs\MiKTeX\tex/latex/polski\omxplex.fd
+File: omxplex.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
+)
+LaTeX Font Info:    External font `plex10' loaded for size
+(Font)              <10> on input line 62.
+LaTeX Font Info:    External font `plex10' loaded for size
+(Font)              <7> on input line 62.
+LaTeX Font Info:    External font `plex10' loaded for size
+(Font)              <5> on input line 62.
+<imgs/capture2a.png, id=14, 148.30406pt x 223.58531pt>
+File: imgs/capture2a.png Graphic file (type png)
+<use imgs/capture2a.png>
+Package pdftex.def Info: imgs/capture2a.png  used on input line 70.
+(pdftex.def)             Requested size: 75.49149pt x 113.81102pt.
+<imgs/capture2b.png, id=15, 146.79843pt x 222.8325pt>
+File: imgs/capture2b.png Graphic file (type png)
+<use imgs/capture2b.png>
+Package pdftex.def Info: imgs/capture2b.png  used on input line 72.
+(pdftex.def)             Requested size: 74.97595pt x 113.81102pt.
+ [2 <./imgs/capture1a.png> <./imgs/capture1b.png> <./imgs/capture2a.png> <./imgs/capture2b.png>]
+<imgs/ko_rule1.png, id=23, 128.73094pt x 106.14656pt>
+File: imgs/ko_rule1.png Graphic file (type png)
+<use imgs/ko_rule1.png>
+Package pdftex.def Info: imgs/ko_rule1.png  used on input line 92.
+(pdftex.def)             Requested size: 113.81102pt x 93.84656pt.
+<imgs/ko_rule2.png, id=24, 132.495pt x 103.88812pt>
+File: imgs/ko_rule2.png Graphic file (type png)
+<use imgs/ko_rule2.png>
+Package pdftex.def Info: imgs/ko_rule2.png  used on input line 94.
+(pdftex.def)             Requested size: 113.81102pt x 89.239pt.
+<imgs/ko_rule_warning.png, id=25, 261.97874pt x 89.58469pt>
+File: imgs/ko_rule_warning.png Graphic file (type png)
+<use imgs/ko_rule_warning.png>
+Package pdftex.def Info: imgs/ko_rule_warning.png  used on input line 96.
+(pdftex.def)             Requested size: 261.9781pt x 89.58446pt.
 
- [2 <./imgs/goban.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 43--47
+Overfull \hbox (55.57773pt too wide) in paragraph at lines 92--98
+ [] 
+ []
+
+[3 <./imgs/ko_rule1.png> <./imgs/ko_rule2.png> <./imgs/ko_rule_warning.png>]
+<imgs/suicide.png, id=32, 88.83188pt x 87.32625pt>
+File: imgs/suicide.png Graphic file (type png)
+<use imgs/suicide.png>
+Package pdftex.def Info: imgs/suicide.png  used on input line 117.
+(pdftex.def)             Requested size: 113.81102pt x 111.88515pt.
+<imgs/suicide_popup.png, id=33, 196.48407pt x 88.83188pt>
+File: imgs/suicide_popup.png Graphic file (type png)
+<use imgs/suicide_popup.png>
+Package pdftex.def Info: imgs/suicide_popup.png  used on input line 123.
+(pdftex.def)             Requested size: 196.48358pt x 88.83165pt.
+ [4 <./imgs/suicide.png> <./imgs/suicide_popup.png>]
+<imgs/deadStones.png, id=39, 152.82094pt x 140.02313pt>
+File: imgs/deadStones.png Graphic file (type png)
+<use imgs/deadStones.png>
+Package pdftex.def Info: imgs/deadStones.png  used on input line 144.
+(pdftex.def)             Requested size: 152.82054pt x 140.02278pt.
+ [5 <./imgs/deadStones.png>]
+<imgs/countingPointsBoard.png, id=44, 438.13687pt x 437.38406pt>
+File: imgs/countingPointsBoard.png Graphic file (type png)
+<use imgs/countingPointsBoard.png>
+Package pdftex.def Info: imgs/countingPointsBoard.png  used on input line 165.
+(pdftex.def)             Requested size: 213.39566pt x 213.03198pt.
+<imgs/gameOver2.png, id=45, 438.8897pt x 437.38406pt>
+File: imgs/gameOver2.png Graphic file (type png)
+<use imgs/gameOver2.png>
+Package pdftex.def Info: imgs/gameOver2.png  used on input line 168.
+(pdftex.def)             Requested size: 213.39566pt x 212.66492pt.
+<imgs/countingPoints.png, id=46, 112.16907pt x 165.61874pt>
+File: imgs/countingPoints.png Graphic file (type png)
+<use imgs/countingPoints.png>
+Package pdftex.def Info: imgs/countingPoints.png  used on input line 178.
+(pdftex.def)             Requested size: 112.16878pt x 165.61833pt.
+ [6 <./imgs/countingPointsBoard.png> <./imgs/gameOver2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 
  []
 
-<imgs/capture1a.png, id=14, 112.16907pt x 149.05687pt>
-File: imgs/capture1a.png Graphic file (type png)
-<use imgs/capture1a.png>
-Package pdftex.def Info: imgs/capture1a.png  used on input line 48.
-(pdftex.def)             Requested size: 112.16878pt x 149.0565pt.
-<imgs/capture1b.png, id=15, 117.43875pt x 149.8097pt>
-File: imgs/capture1b.png Graphic file (type png)
-<use imgs/capture1b.png>
-Package pdftex.def Info: imgs/capture1b.png  used on input line 49.
-(pdftex.def)             Requested size: 117.43845pt x 149.80931pt.
-<imgs/capture2a.png, id=16, 149.8097pt x 224.33812pt>
-File: imgs/capture2a.png Graphic file (type png)
-<use imgs/capture2a.png>
-Package pdftex.def Info: imgs/capture2a.png  used on input line 52.
-(pdftex.def)             Requested size: 149.80931pt x 224.33757pt.
-<imgs/capture2b.png, id=17, 151.3153pt x 224.33812pt>
-File: imgs/capture2b.png Graphic file (type png)
-<use imgs/capture2b.png>
-Package pdftex.def Info: imgs/capture2b.png  used on input line 53.
-(pdftex.def)             Requested size: 151.31493pt x 224.33757pt.
-<imgs/ko_rule1.png, id=18, 129.48375pt x 108.405pt>
-File: imgs/ko_rule1.png Graphic file (type png)
-<use imgs/ko_rule1.png>
-Package pdftex.def Info: imgs/ko_rule1.png  used on input line 61.
-(pdftex.def)             Requested size: 129.48341pt x 108.40472pt.
-<imgs/ko_rule2.png, id=19, 132.495pt x 103.88812pt>
-File: imgs/ko_rule2.png Graphic file (type png)
-<use imgs/ko_rule2.png>
-Package pdftex.def Info: imgs/ko_rule2.png  used on input line 62.
-(pdftex.def)             Requested size: 132.49466pt x 103.88786pt.
-<imgs/ko_rule_warning.png, id=20, 265.74281pt x 94.10156pt>
-File: imgs/ko_rule_warning.png Graphic file (type png)
-<use imgs/ko_rule_warning.png>
-Package pdftex.def Info: imgs/ko_rule_warning.png  used on input line 63.
-(pdftex.def)             Requested size: 265.74216pt x 94.10132pt.
-[3 <./imgs/capture1a.png> <./imgs/capture1b.png> <./imgs/capture2a.png> <./imgs/capture2b.png>] [4 <./imgs/ko_rule1.png> <./imgs/ko_rule2.png> <./imgs/ko_rule_warning.png>] (sprawko.aux) ) 
+<imgs/confirmExit.png, id=52, 195.73125pt x 91.09032pt>
+File: imgs/confirmExit.png Graphic file (type png)
+<use imgs/confirmExit.png>
+Package pdftex.def Info: imgs/confirmExit.png  used on input line 191.
+(pdftex.def)             Requested size: 195.73076pt x 91.09007pt.
+<imgs/missingFile.png, id=53, 206.27063pt x 88.83188pt>
+File: imgs/missingFile.png Graphic file (type png)
+<use imgs/missingFile.png>
+Package pdftex.def Info: imgs/missingFile.png  used on input line 202.
+(pdftex.def)             Requested size: 206.27011pt x 88.83165pt.
+<imgs/brokenFile.png, id=54, 201.75375pt x 89.58469pt>
+File: imgs/brokenFile.png Graphic file (type png)
+<use imgs/brokenFile.png>
+Package pdftex.def Info: imgs/brokenFile.png  used on input line 212.
+(pdftex.def)             Requested size: 201.75325pt x 89.58446pt.
+[7 <./imgs/countingPoints.png> <./imgs/confirmExit.png> <./imgs/missingFile.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 214--216
+
+ []
+
+
+Overfull \hbox (19.99635pt too wide) in paragraph at lines 216--221
+\OT4/cmr/m/n/10 Zdj¦cia ka-mieni: https://pixabay.com/pl/vectors/czerwony-przycisk-odznaka-okr%c4%85g-47690/ 
+ []
+
+
+Overfull \hbox (21.38515pt too wide) in paragraph at lines 216--221
+\OT4/cmr/m/n/10 Zobrist Ha-shing: https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-5-zobrist-
+ []
+
+[8 <./imgs/brokenFile.png>] (sprawko.aux) ) 
 Here is how much of TeX's memory you used:
- 3651 strings out of 478907
- 58899 string characters out of 2851891
- 377435 words of memory out of 3000000
- 21490 multiletter control sequences out of 15000+600000
- 405431 words of font info for 31 fonts, out of 8000000 for 9000
+ 4597 strings out of 478907
+ 77882 string characters out of 2851891
+ 391873 words of memory out of 3000000
+ 22427 multiletter control sequences out of 15000+600000
+ 408608 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,11n,70p,245b,372s stack positions out of 5000i,500n,10000p,200000b,80000s
-{C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plrm.enc}<C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plbx12.pfb><C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr10.pfb><C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr12.pfb>
-Output written on sprawko.pdf (4 pages, 78734 bytes).
+ 57i,11n,66p,418b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
+{C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/pl/plrm.enc}<C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plbx10.pfb><C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plbx12.pfb><C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr10.pfb><C:/Users/zuzan/AppData/Local/Programs/MiKTeX/fonts/type1/public/pl/plr12.pfb>
+Output written on sprawko.pdf (8 pages, 200720 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
+ 85 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 86 words of extra memory for PDF output out of 10000 (max. 10000000)
 

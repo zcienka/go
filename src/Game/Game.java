@@ -33,35 +33,6 @@ public class Game {
             initializeZobristTable();
             initializeEmptyGameBoard();
         }
-//        gameBoard = new ArrayList<>();
-//        gameBoard.add(Arrays.asList(-1, -1, -1, 0, 1, 1, -1, 1, 0, 0, -1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, 0, -1, -1, 0, 1, -1, 1, 0, -1, 0, -1, -1));
-//        gameBoard.add(Arrays.asList(0, -1, -1, 0, -1, 0, 1, 1, 1, 0, 0, 0, 0));
-//        gameBoard.add(Arrays.asList(1, 0, 0, -1, 0, -1, 0, 1, -1, 1, 1, 0, 1));
-//        gameBoard.add(Arrays.asList(1, 1, 0, -1, -1, 0, 0, 0, 1, -1, 1, 1, 1));
-//        gameBoard.add(Arrays.asList(-1, -1, 1, 0, 0, 0, -1, 0, 0, 1, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, 1, -1, 1, 1, 0, 0, 1, 0, 1, -1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, -1, -1, -1, 1, -1, 0, 1, -1, 1, -1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, -1, -1, -1, 1, 1, 1, 1, 1, 0, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(1, 1, 0, 0, -1, -1, -1, 0, -1, 0, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(1, 0, -1, 0, -1, -1, -1, -1, 0, 1, 1, -1, -1))l;
-//        gameBoard.add(Arrays.asList(-1, 0, -1, 0, -1, -1, -1, -1, 0, 0, 1, -1, -1));
-
-
-//        gameBoard.add(Arrays.asList(-1, -1, -1, 0, 1, 1, -1, 1, 0, 0, -1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, 0, -1, -1, 0, 1, -1, 1, 0, -1, 0, -1, -1));
-//        gameBoard.add(Arrays.asList(0, -1, -1, 0, -1, 0, 1, 1, 1, 0, 0, 0, 0));
-//        gameBoard.add(Arrays.asList(1, 0, 0, -1, 0, -1, 0, 1, -1, 1, 1, 0, 1));
-//        gameBoard.add(Arrays.asList(1, 1, 0, -1, -1, 0, 0, 0, 1, -1, 1, 1, 1));
-//        gameBoard.add(Arrays.asList(-1, -1, 1, 0, 0, 0, -1, 0, 0, 1, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, 1, -1, 1, 1, 0, 0, 1, 0, 1, -1, 0, -1));
-//        gameBoard.add(Arrays.asList(-1, -1, -1, -1, 1, -1, 0, 1, -1, 1, -1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, -1, -1, -1, 1, 1, 1, 1, 1, 0, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(1, 1, 0, 0, -1, -1, -1, 0, -1, 0, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(1, 0, -1, 0, -1, -1, -1, -1, 0, 1, 1, -1, -1));
-//        gameBoard.add(Arrays.asList(-1, 0, -1, 0, -1, -1, -1, -1, 0, 0, 1, -1, -1));
         deadStones = new ArrayList<>(NUMBER_OF_ROWS + 1);
 
         for (int i = 0; i <= NUMBER_OF_ROWS; i++) {
@@ -73,7 +44,7 @@ public class Game {
 
     }
 
-    private void initializeEmptyGameBoard() {
+    public void initializeEmptyGameBoard() {
         ArrayList<Integer> row = new ArrayList<>(NUMBER_OF_ROWS + 1);
         for (int j = 0; j <= NUMBER_OF_ROWS; j++) {
             row.add(PLACE_NOT_TAKEN);
@@ -128,8 +99,36 @@ public class Game {
 
     // I assume that you can't commit suicide
     private boolean isSuicide(Pair<Integer, Integer> lastMove) {
-//        return !areLibertiesLeft(lastMove);
-        return false;
+        Integer opponentStone = Math.abs(CURRENT_PLAYER.getPlayerNumber() - 1);
+        int counter = 0;
+        int allAvailableMovesCounter = 0;
+
+        if (!checkIfInvalidIndex(lastMove.first + 1, lastMove.second)) {
+            allAvailableMovesCounter++;
+            if (Objects.equals(gameBoard.get(lastMove.first + 1).get(lastMove.second), opponentStone)) {
+                counter++;
+            }
+        }
+        if (!checkIfInvalidIndex(lastMove.first - 1, lastMove.second)) {
+            allAvailableMovesCounter++;
+            if (Objects.equals(gameBoard.get(lastMove.first - 1).get(lastMove.second), opponentStone)) {
+                counter++;
+            }
+        }
+        if (!checkIfInvalidIndex(lastMove.first, lastMove.second + 1)) {
+            allAvailableMovesCounter++;
+            if (Objects.equals(gameBoard.get(lastMove.first).get(lastMove.second + 1), opponentStone)) {
+                counter++;
+            }
+        }
+        if (!checkIfInvalidIndex(lastMove.first, lastMove.second - 1)) {
+            allAvailableMovesCounter++;
+            if (Objects.equals(gameBoard.get(lastMove.first).get(lastMove.second - 1), opponentStone)) {
+                counter++;
+            }
+        }
+
+        return counter == allAvailableMovesCounter;
     }
 
     public void makeMove(Pair<Integer, Integer> move) {
@@ -459,7 +458,7 @@ public class Game {
         gameBoard.get(stone.first).set(stone.second, PLACE_NOT_TAKEN);
     }
 
-    private void initializeZobristTable() {
+    public void initializeZobristTable() {
         zobristTable = new ArrayList<>(NUMBER_OF_ROWS + 1);
         long randomNumber;
 
@@ -556,5 +555,9 @@ public class Game {
 
     public ArrayList<Long> getPastMoves() {
         return pastMoves;
+    }
+
+    public void clearPastMoves(){
+        pastMoves.clear();
     }
 }
